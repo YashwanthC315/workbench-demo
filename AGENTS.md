@@ -243,12 +243,12 @@ sequenceDiagram
 ## Git primitives to be used
 
 ### Create Hotfix
-
+```
 git checkout release/airtel
 git checkout -b hotfix/airtel-auth-fix
-
+```
 ### Complete Hotfix
-
+```
 git add .
 git commit -m "HOTFIX: fix auth issue"
 
@@ -256,36 +256,36 @@ git checkout release/airtel
 git merge --no-ff hotfix/airtel-auth-fix
 
 git tag airtel-v1.0.1
-
+```
 ### Propagate Fix To Main
-
+```
 git checkout main
 git cherry-pick -x <commit_sha>
-
+```
 ---
 
 ## Repository history and diagnostics
 
 ### Visualize Branch Graph
-
+```
 git log --graph --decorate --oneline --all
-
+```
 ### Check Branch Containing Commit
-
+```
 git branch --contains <sha>
-
+```
 ### View Tags
-
+```
 git tag
-
+```
 ### Abort Failed Cherry-Pick
-
+```
 git cherry-pick --abort
-
+```
 ### Resolve Merge State
-
+```
 git status
-
+```
 ---
 
 ## Recovery Rules

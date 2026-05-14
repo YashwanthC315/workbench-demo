@@ -243,12 +243,15 @@ sequenceDiagram
 ## Git primitives to be used
 
 ### Create Hotfix
-```
+```bash
 git checkout release/airtel
+git pull origin release/airtel
+
 git checkout -b hotfix/airtel-auth-fix
 ```
+
 ### Complete Hotfix
-```
+```bash
 git add .
 git commit -m "HOTFIX: fix auth issue"
 
@@ -256,35 +259,178 @@ git checkout release/airtel
 git merge --no-ff hotfix/airtel-auth-fix
 
 git tag airtel-v1.0.1
+
+git push origin release/airtel --tags
 ```
+
 ### Propagate Fix To Main
-```
+```bash
 git checkout main
+git pull origin main
+
 git cherry-pick -x <commit_sha>
+
+git push origin main
 ```
+
+### Propagate Fix To Another Release Branch
+```bash
+git checkout release/reliance
+git pull origin release/reliance
+
+git cherry-pick -x <commit_sha>
+
+git push origin release/reliance
+```
+
+### Resolve Cherry-Pick Conflict
+```bash
+git status
+
+git diff --name-only --diff-filter=U
+
+# manually resolve conflicts
+
+git add .
+
+git cherry-pick --continue
+```
+
+### Abort Failed Cherry-Pick
+```bash
+git cherry-pick --abort
+```
+
+### Abort Failed Merge
+```bash
+git merge --abort
+```
+
+### Abort Failed Rebase
+```bash
+git rebase --abort
+```
+
+### Validate Current Branch State
+```bash
+git status
+
+git branch -vv
+
+git remote -v
+```
+
+### Inspect Hotfix Commit
+```bash
+git show <commit_sha>
+```
+
+### Inspect Tag Details
+```bash
+git show <tag>
+```
+
+### Compare Branch Divergence
+```bash
+git log release/airtel..main
+
+git log main..release/airtel
+```
+
+### Detect Missing Cherry-Picks
+```bash
+git cherry -v release/airtel main
+```
+
+### Cleanup Local Hotfix Branch
+```bash
+git branch -d hotfix/airtel-auth-fix
+```
+
+### Cleanup Remote Hotfix Branch
+```bash
+git push origin --delete hotfix/airtel-auth-fix
+```
+
+### Remove Stale Remote References
+```bash
+git fetch --prune
+```
+
 ---
 
 ## Repository history and diagnostics
 
 ### Visualize Branch Graph
-```
+```bash
 git log --graph --decorate --oneline --all
 ```
-### Check Branch Containing Commit
+
+### Visualize Detailed Commit History
+```bash
+git log --oneline --decorate --graph
 ```
+
+### Check Branch Containing Commit
+```bash
 git branch --contains <sha>
 ```
-### View Tags
+
+### Inspect Commit Details
+```bash
+git show <sha>
 ```
+
+### View Tags
+```bash
 git tag
 ```
-### Abort Failed Cherry-Pick
+
+### View Latest Tags
+```bash
+git tag --sort=-creatordate
 ```
-git cherry-pick --abort
-```
+
 ### Resolve Merge State
-```
+```bash
 git status
+```
+
+### Identify Conflicted Files
+```bash
+git diff --name-only --diff-filter=U
+```
+
+### View Current Differences
+```bash
+git diff
+```
+
+### Check Tracking Branch Information
+```bash
+git branch -vv
+```
+
+### Inspect Remote Configuration
+```bash
+git remote -v
+```
+
+### Verify Release Branch Drift
+```bash
+git log release/airtel..main
+
+git log main..release/airtel
+```
+
+### Detect Already-Applied Commits
+```bash
+git cherry -v release/airtel main
+```
+
+### View Merged Branches
+```bash
+git branch --merged
 ```
 ---
 
